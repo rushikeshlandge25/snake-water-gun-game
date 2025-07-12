@@ -1,34 +1,16 @@
 import random
-from colorama import Fore, Style, init
-
-# Initialize colorama
-init(autoreset=True)
-
-# Mapping for choices
-choice_dict = {"S": 1, "W": -1, "G": 0}
-reverse_dict = {1: "Snake", -1: "Water", 0: "Gun"}
-
-# Get computer's choice
 computer = random.choice([1, 0, -1])
+youstr = input("Enter your choice (s for snake, w for water, g for gun): ").lower()
+youDict = {"s": 1, "w": -1, "g": 0}
+reverseDict = {1: "snake", -1: "water", 0: "gun"}  # <-- Fixed closing brace
 
-# Get user input
-you_str = input(Fore.CYAN + "Enter your choice (S for Snake, W for Water, G for Gun): ").upper()
+you = youDict[youstr]
+print(f"You chose {reverseDict[you]} \nComputer chose {reverseDict[computer]}")
 
-# Validate input
-if you_str not in choice_dict:
-    print(Fore.RED + "Invalid input! Choose only S, W, or G.")
+if you == computer:
+    print("It's a draw")
 else:
-    you = choice_dict[you_str]
-
-    print(Fore.YELLOW + f"You chose: {reverse_dict[you]}")
-    print(Fore.YELLOW + f"Computer chose: {reverse_dict[computer]}")
-
-    # Result logic with colored output
-    if computer == you:
-        print(Fore.BLUE + "It's a tie!")
-    elif (computer == 1 and you == -1) or \
-         (computer == -1 and you == 0) or \
-         (computer == 0 and you == 1):
-        print(Fore.RED + "You lose!")
+    if ((computer - you) == -1) or ((computer - you) == 2):
+        print("You lost")
     else:
-        print(Fore.GREEN + "You win!")
+        print("You win")
